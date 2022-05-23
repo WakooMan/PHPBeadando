@@ -1,3 +1,9 @@
+<?php
+include('seriesStorage.php');
+include('usersStorage.php');
+$series = new SeriesStorage();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +19,9 @@
     <a href="bejelentkezes.php">Bejelentkezés</a>
     <h2>Sorozatok:</h2>
     <ul>
-        <li>Sorozat 1 <a href="reszletek.php">Részletek</a></li>
+        <?php foreach($series as $ser) : ?>
+            <li><?=$ser['title']?> <a href="reszletek.php?id=<?=$ser['id']?>">Részletek</a></li>
+        <?php endforeach ?>
     </ul>
 </body>
 </html>

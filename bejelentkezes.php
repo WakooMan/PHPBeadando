@@ -1,3 +1,67 @@
+<?php
+session_start();
+include('userStorage.php');
+function validate($get,string &$error,UsersStorage $users)
+{
+    if(!isset($get['username']) || trim($get['username']) === '')
+    {
+        $error = 'A felhasználónevet kötelező megadni!';
+        return NULL;
+    }
+    else
+    {
+        $user = $users->findByUserName($get['username']);
+        if($user === NULL)
+        {
+            $error = 'Nincs ilyen felhasználónévvel rendelkező felhasználó!';
+            return NULL;
+        }
+        else
+        {
+            if(!isset($get['password']) || trim($get['password']) === '')
+            {
+                $error = 'A jelszót kötelező megadni!';
+                return NULL;
+            }
+            else
+            {
+                if($user['password'] !== $get['password'])
+                {
+                    $error = 'Rossz jelszót adtál meg!';
+                    return NULL;
+                }
+                return $user;
+            }
+        }
+    }
+}
+if(isset($_SESSION['felhasznalo']))
+{
+    header('Location:index.php');
+    exit();
+}
+$users = new UsersStorage();
+if(isset($_GET) && count($_GET)>0)
+{
+    $error = '';
+    $user = validate($_GET,$error,$users);
+    if($user !== NULL)
+    {
+        $_SESSION['felhasznalo']=
+        [
+            'id'=>$user['id'],
+            'username'=>$user['username'],
+            'email'=>$user['email'],
+            'watched'=>$user['watched'],
+        ];
+        header('Location: index.php');
+        exit();
+    }
+}
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
