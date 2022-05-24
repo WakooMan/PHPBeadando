@@ -1,7 +1,12 @@
 <?php
 session_start();
-include('userStorage.php');
-function validate($get,string &$error,UsersStorage $users)
+include('storages.php');
+if(isset($_SESSION['felhasznalo']))
+{
+    header('Location:index.php');
+    exit();
+}
+function validateUser($get,string &$error,UsersStorage $users)
 {
     if(!isset($get['username']) || trim($get['username']) === '')
     {
@@ -35,16 +40,11 @@ function validate($get,string &$error,UsersStorage $users)
         }
     }
 }
-if(isset($_SESSION['felhasznalo']))
-{
-    header('Location:index.php');
-    exit();
-}
-$users = new UsersStorage();
 if(isset($_GET) && count($_GET)>0)
 {
+    $users = new UsersStorage();
     $error = '';
-    $user = validate($_GET,$error,$users);
+    $user = validateUser($_GET,$error,$users);
     if($user !== NULL)
     {
         $_SESSION['felhasznalo']=
@@ -69,13 +69,30 @@ if(isset($_GET) && count($_GET)>0)
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bejelentkezés</title>
+    <style>
+        .error
+        {
+            color: red;
+        }
+        .success
+        {
+            color:green;
+        }
+    </style>
 </head>
 <body>
+    <?php if(isset($error) && trim($error)!=='') : ?>
+        <span class="error"><?=$error?></span>
+    <?php endif ?>
+    <?php if(isset($_SESSION['sikeresregisztracio'])) : ?>
+        <span class="success"><?=$_SESSION['sikeresregisztracio']?></span>
+        <?php $_SESSION['sikeresregisztracio'] = NULL; ?>
+    <?php endif ?>
     <form action="" method="GET" novalidate>
         <label for="usern">Felhasználónév</label> <br>
-        <input type="text" name="username" id="usern"> <br>
+        <input type="text" name="username" id="usern" value='<?=(isset($_GET['username']))?$_GET['username']:''?>'> <br>
         <label for="pwd">Jelszó</label> <br>
-        <input type="password" name="password" id="pwd"> <br>
+        <input type="password" name="password" id="pwd" value='<?=(isset($_GET['password']))?$_GET['password']:''?>'> <br>
         <button type="submit">Belépés</button>
     </form>
     <a href="regisztracio.php">Regisztráció</a>

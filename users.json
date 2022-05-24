@@ -1,0 +1,19 @@
+{
+    "adminid": {
+        "username": "admin",
+        "password": "admin",
+        "email": "admin@gmail.com",
+        "isadmin": true,
+        "watched": [],
+        "id": "adminid"
+    },
+
+    "628cb5450ac7b": {
+        "username": "valami",
+        "password": "valami",
+        "email": "magyar@gmail.com",
+        "isadmin": false,
+        "watched": [],
+        "id": "628cb5450ac7b"
+    }
+}

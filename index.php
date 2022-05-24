@@ -1,6 +1,6 @@
 <?php
-include('seriesStorage.php');
-include('usersStorage.php');
+session_start();
+include('storages.php');
 $series = new SeriesStorage();
 ?>
 
@@ -16,7 +16,11 @@ $series = new SeriesStorage();
     <h1>Sorozatfigyelő</h1>
     <h2>Rövid ismertetés</h2>
     <p></p>
-    <a href="bejelentkezes.php">Bejelentkezés</a>
+    <?php if(!isset($_SESSION['felhasznalo'])) : ?>
+        <a href="bejelentkezes.php">Bejelentkezés</a>
+    <?php else : ?>
+        <a href="kijelentkezes.php">Kijelentkezés</a>
+    <?php endif ?>
     <h2>Sorozatok:</h2>
     <ul>
         <?php foreach($series as $ser) : ?>
