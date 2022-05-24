@@ -1,7 +1,13 @@
 <?php
 session_start();
 include('storages.php');
+$users = new UsersStorage();
 $series = new SeriesStorage();
+$isAdmin = false;
+if(isset($_SESSION['felhasznalo']) && $users->findById($_SESSION['felhasznalo']['id'])['isadmin'])
+{
+    $isAdmin = true;
+}
 ?>
 
 <!DOCTYPE html>
@@ -24,8 +30,11 @@ $series = new SeriesStorage();
     <h2>Sorozatok:</h2>
     <ul>
         <?php foreach($series as $ser) : ?>
-            <li><?=$ser['title']?> <a href="reszletek.php?id=<?=$ser['id']?>">Részletek</a></li>
+            <li><?=$ser['title']?> <a href="reszletek.php?id=<?=$ser['id']?>">Részletek</a> <?php if($isAdmin) : ?><a href="modifySeries.php?id=<?=$ser['id']?>">Módosítás</a> <a href="deleteSeries.php?id=<?=$ser['id']?>">Törlés</a><?php endif ?></li>
         <?php endforeach ?>
     </ul>
+    <?php if($isAdmin) : ?>
+        <a href="addSeries.php">Sorozat hozzáadása</a>
+    <?php endif ?>
 </body>
 </html>
