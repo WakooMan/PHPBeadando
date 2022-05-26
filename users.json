@@ -5,7 +5,7 @@
         "email": "admin@gmail.com",
         "isadmin": true,
         "watched": {
-            "628fd8a6118a0": 2
+            "628fd8a6118a0": 3
         },
         "id": "adminid"
     },
@@ -15,7 +15,7 @@
         "email": "magyar@gmail.com",
         "isadmin": false,
         "watched": {
-            "628fd8a6118a0": 2
+            "628fd8a6118a0": 3
         },
         "id": "628cb5450ac7b"
     }

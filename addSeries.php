@@ -94,11 +94,11 @@ if(count($_POST)>0)
     <h2>Sorozat Epizódjai</h2>
     <table>
         <tr>
-            <th>Epizód címe</th> <th>Megjelenés Dátuma</th> <th>Leírás</th>
+            <th>Epizód címe</th> <th>Megjelenés Dátuma</th> <th>Leírás</th> <th>Értékelés</th>
         </tr>
         <?php foreach($_SESSION['sorozat']['episodes'] as $epizod) : ?>
             <tr>
-                <td><?=$epizod['title']?></td> <td><?=$epizod['date']?></td> <td><?=$epizod['plot']?></td><td><a href="modifyEpisode.php?id=<?=$epizod['id']?>">Módosítás</a></td><td><a href="deleteEpisode.php?id=<?=$epizod['id']?>">Törlés</a></td>
+                <td><?=$epizod['title']?></td> <td><?=$epizod['date']?></td> <td><?=$epizod['plot']?></td> <td><?=$epizod['rating']?></td> <td><a href="modifyEpisode.php?id=<?=$epizod['id']?>">Módosítás</a></td><td><a href="deleteEpisode.php?id=<?=$epizod['id']?>">Törlés</a></td>
             </tr>
         <?php endforeach ?>
     </table>

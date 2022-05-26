@@ -3,19 +3,28 @@
         "year": "2000",
         "title": "Valami",
         "plot": "dsfd",
-        "cover": "fdsdf",
+        "cover": "https:\/\/flixpatrol.com\/runtime\/cache\/files\/posters\/d\/ddlemu3ez0pgg93k2svnlcjcsve.webp",
         "episodes": {
             "628fd87dda0bd": {
                 "id": "628fd87dda0bd",
                 "title": "Gertr\u00fad",
                 "date": "2012.05.30.",
-                "plot": "dfsf"
+                "plot": "dfsf",
+                "rating": "5.4"
             },
             "628fd8975406b": {
                 "id": "628fd8975406b",
                 "title": "Aladin",
-                "date": "2012.05.30.",
-                "plot": "dsdf"
+                "date": "2012.06.30.",
+                "plot": "dsdf",
+                "rating": "7"
+            },
+            "628ff9c05f9b7": {
+                "id": "628ff9c05f9b7",
+                "title": "J\u00e1mbor",
+                "date": "2014.12.05.",
+                "plot": "gfdg",
+                "rating": "9"
             }
         },
         "id": "628fd8a6118a0"

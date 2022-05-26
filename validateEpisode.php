@@ -50,6 +50,26 @@ function validate($post,&$data,&$errors,$episodes,$exception=NULL): bool
     {
         $data['plot'] = $post['plot'];
     }
+
+    if(!isset($post['rating']) || trim($post['rating']) === '')
+    {
+        $errors['rating'] = 'Az értékelést kötelező megadni!';
+    }
+    else
+    {
+        if(!filter_var($post['rating'],FILTER_VALIDATE_FLOAT))
+        {
+            $errors['rating'] = 'Az értékelésnek lebegőpontos számnak kell lennie!';
+        }
+        elseif(10 < (float)$post['rating'] || 0 > (float)$post['rating'])
+        {
+            $errors['rating'] = 'Az értékelésnek 0 és 10 közötti valós számnak kell lennie!';
+        }
+        else
+        {
+            $data['rating'] = $post['rating'];
+        }
+    }
     return count($errors) === 0;
 }
 ?>

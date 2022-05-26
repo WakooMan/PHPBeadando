@@ -20,10 +20,11 @@ if(count($_POST)>0)
         {
             $_SESSION['sorozat']['episodes'][$_GET['id']]=
             [
-                'id' => $id,
+                'id' => $_GET['id'],
                 'title'=> $data['title'],
                 'date' => $data['date'],
                 'plot' => $data['plot'],
+                'rating' => $data['rating'],
             ];
         }
         header('Location: '.$_SESSION['oldal']);
@@ -59,6 +60,11 @@ if(count($_POST)>0)
         <label for="leiras">Leírás</label> <input type="text" id="leiras" name="plot" value="<?=(isset($_POST['plot'])?$_POST['plot']:$episode['plot'])?>">
         <?php if(isset($errors['plot'])) : ?>
             <span class="error"><?=$errors['plot']?></span>
+        <?php endif ?>
+        <br>
+        <label for="ertekeles">Értékelés</label> <input type="text" id="ertekeles" name="rating" value="<?=(isset($_POST['rating'])?$_POST['rating']:$episode['rating'])?>">
+        <?php if(isset($errors['rating'])) : ?>
+            <span class="error"><?=$errors['rating']?></span>
         <?php endif ?>
         <br>
         <button type="submit" name="elkuld" value="add">Módosít</button> <button type="submit" name="elkuld" value="cancel">Mégse</button>

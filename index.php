@@ -27,12 +27,17 @@ if(isset($_SESSION['felhasznalo']) && $users->findById($_SESSION['felhasznalo'][
     <?php else : ?>
         <a href="kijelentkezes.php">Kijelentkezés</a>
     <?php endif ?>
-    <h2>Sorozatok:</h2>
-    <ul>
+    <h2>Sorozatok</h2>
+    <table>
+        <tr>
+            <th>Cím</th><th>Epizódok száma</th><th>Utolsó rész megjelenésének dátuma</th>
+        </tr>
         <?php foreach($series -> findAll() as $ser) : ?>
-            <li><?=$ser['title']?> <a href="reszletek.php?id=<?=$ser['id']?>">Részletek</a> <?php if($isAdmin) : ?><a href="modifySeries.php?id=<?=$ser['id']?>">Módosítás</a> <a href="deleteSeries.php?id=<?=$ser['id']?>">Törlés</a><?php endif ?></li>
+            <tr>
+            <td><?=$ser['title']?></td> <td><?=count($ser['episodes'])?></td> <td><?=end($ser['episodes'])['date']?></td> <td><a href="reszletek.php?id=<?=$ser['id']?>">Részletek</a></td> <?php if($isAdmin) : ?><td><a href="modifySeries.php?id=<?=$ser['id']?>">Módosítás</a></td> <td><a href="deleteSeries.php?id=<?=$ser['id']?>">Törlés</a></td><?php endif ?>
+            </tr>
         <?php endforeach ?>
-    </ul>
+    </table>
     <?php if($isAdmin) : ?>
         <a href="addSeries.php">Sorozat hozzáadása</a>
     <?php endif ?>

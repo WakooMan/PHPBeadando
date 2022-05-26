@@ -36,24 +36,26 @@ if(isset($_POST['inc']))
             <th>Cím</th><td><?=$ser['title']?></td>
         </tr>
         <tr>
-        <th>Megjelenés éve</th><td><?=$ser['year']?></td>
+            <th>Megjelenés éve</th><td><?=$ser['year']?></td>
         </tr>
         <tr>
-        <th>Epizódok száma</th><td><?=count($ser['episodes'])?></td>
+            <th>Epizódok száma</th><td><?=count($ser['episodes'])?></td>
         </tr>
         <tr>
-
+        <tr>
+            <th>Borítókép</th><td><img src="<?=$ser['cover']?>" alt="boritokep"></td>
         </tr>
-        <th>Leírás</th><td><?=$ser['plot']?></td>
+        </tr>
+            <th>Leírás</th><td><?=$ser['plot']?></td>
     </table>
     <h1>Epizódok</h1>
     <table>
         <tr>
-            <th>Epizód címe</th><th>Megjelenés Dátuma</th><th>Leírás</th><?php if(isset($_SESSION['felhasznalo'])) : ?><th>Megtekintett</th><?php endif ?>
+            <th>Epizód címe</th><th>Megjelenés Dátuma</th><th>Leírás</th><th>Értékelés</th><?php if(isset($_SESSION['felhasznalo'])) : ?><th>Megtekintett</th><?php endif ?>
         </tr>
         <?php $i=0; foreach($ser['episodes'] as $episode) : ?>
             <tr>
-                <td><?=$episode['title']?></td><td><?=$episode['date']?></td><td><?=$episode['plot']?></td>
+                <td><?=$episode['title']?></td><td><?=$episode['date']?></td><td><?=$episode['plot']?></td><td><?=$episode['rating']?></td>
                 <?php if(isset($_SESSION['felhasznalo'])) : ?>
                     <td>
                         <?php if($i === $_SESSION['felhasznalo']['watched'][$ser['id']]) : ?>
