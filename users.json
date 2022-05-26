@@ -4,7 +4,9 @@
         "password": "admin",
         "email": "admin@gmail.com",
         "isadmin": true,
-        "watched": [],
+        "watched": {
+            "628fd8a6118a0": 2
+        },
         "id": "adminid"
     },
     "628cb5450ac7b": {
@@ -12,7 +14,9 @@
         "password": "valami",
         "email": "magyar@gmail.com",
         "isadmin": false,
-        "watched": [],
+        "watched": {
+            "628fd8a6118a0": 2
+        },
         "id": "628cb5450ac7b"
     }
 }

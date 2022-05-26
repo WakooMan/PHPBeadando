@@ -33,7 +33,12 @@ if(count($_POST)>0)
             $_SESSION['sorozat']['year'] = $data['year'];
             $_SESSION['sorozat']['plot'] = $data['plot'];
             $_SESSION['sorozat']['cover'] = $data['cover'];
-            $series -> add($_SESSION['sorozat']);
+            $id = $series -> add($_SESSION['sorozat']);
+            foreach($users-> findAll() as $user)
+            {
+                $user['watched'][$id] = 0;
+                $users->update($user['id'],$user);
+            }
         }
         $_SESSION['sorozat'] = NULL;
         $_SESSION['oldal'] = NULL;

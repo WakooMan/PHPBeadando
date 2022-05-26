@@ -9,6 +9,11 @@ if(!isset($_SESSION['felhasznalo']) || !($users->findById($_SESSION['felhasznalo
     exit();
 }
 $series->delete($_GET['id']);
+foreach($users-> findAll() as $user)
+{
+    unset($user['watched'][$_GET['id']]);
+    $users->update($user['id'],$user);
+}
 header('Location: index.php');
 exit();
 ?>

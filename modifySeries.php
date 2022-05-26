@@ -27,6 +27,15 @@ if(count($_POST)>0)
             $_SESSION['sorozat']['plot'] = $data['plot'];
             $_SESSION['sorozat']['cover'] = $data['cover'];
             $series -> update($_SESSION['sorozat']['id'],$_SESSION['sorozat']);
+            foreach($users-> findAll() as $user)
+            {
+                $id = $_SESSION['sorozat']['id'];
+                if(count($_SESSION['sorozat']['episodes']) < $user['watched'][$id])
+                {
+                    $user['watched'][$id] = count($_SESSION['sorozat']['episodes']);
+                    $users->update($user['id'],$user);
+                }
+            }
         }
         $_SESSION['sorozat'] = NULL;
         $_SESSION['oldal'] = NULL;

@@ -1,25 +1,23 @@
 {
-    "628f8469ba45d": {
-        "year": "10",
-        "title": "Valami2",
-        "plot": "fgdgf",
-        "cover": "gfdgd",
-        "episodes": [],
-        "id": "628f8469ba45d"
-    },
-    "628fc68b2ef62": {
+    "628fd8a6118a0": {
         "year": "2000",
         "title": "Valami",
-        "plot": "gfdg",
-        "cover": "dfgf",
+        "plot": "dsfd",
+        "cover": "fdsdf",
         "episodes": {
-            "628fc657af662": {
-                "id": "628fc657af662",
-                "title": "Valami",
+            "628fd87dda0bd": {
+                "id": "628fd87dda0bd",
+                "title": "Gertr\u00fad",
                 "date": "2012.05.30.",
-                "plot": "dfsfd"
+                "plot": "dfsf"
+            },
+            "628fd8975406b": {
+                "id": "628fd8975406b",
+                "title": "Aladin",
+                "date": "2012.05.30.",
+                "plot": "dsdf"
             }
         },
-        "id": "628fc68b2ef62"
+        "id": "628fd8a6118a0"
     }
 }
