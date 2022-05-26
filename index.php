@@ -29,7 +29,7 @@ if(isset($_SESSION['felhasznalo']) && $users->findById($_SESSION['felhasznalo'][
     <?php endif ?>
     <h2>Sorozatok:</h2>
     <ul>
-        <?php foreach($series as $ser) : ?>
+        <?php foreach($series -> findAll() as $ser) : ?>
             <li><?=$ser['title']?> <a href="reszletek.php?id=<?=$ser['id']?>">Részletek</a> <?php if($isAdmin) : ?><a href="modifySeries.php?id=<?=$ser['id']?>">Módosítás</a> <a href="deleteSeries.php?id=<?=$ser['id']?>">Törlés</a><?php endif ?></li>
         <?php endforeach ?>
     </ul>

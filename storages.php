@@ -6,6 +6,11 @@ class SeriesStorage extends Storage
     {
         parent::__construct(new JsonIO('series.json'));
     }
+
+    public function seriesWithTitleExists(string $title): bool
+    {
+        return $this -> findOne(['title' => $title]) !== NULL;
+    }
 }
 
 class UsersStorage extends Storage
