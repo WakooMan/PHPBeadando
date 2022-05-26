@@ -1,5 +1,5 @@
 <?php
-function validate($post,&$data,&$errors,$series) : bool
+function validate($post,&$data,&$errors,$series,$exception=NULL) : bool
 {
     if(!isset($post['title']) || trim($post['title']) === '')
     {
@@ -7,7 +7,7 @@ function validate($post,&$data,&$errors,$series) : bool
     }
     else
     {
-        if($series -> seriesWithTitleExists($post['title']))
+        if($series -> seriesWithTitleExists($post['title']) && ($exception !== NULL && $exception['title']!==$post['title']))
         {
             $errors['title'] = 'Már létezik ilyen címmel rendelkező sorozat!';
         }
@@ -19,13 +19,13 @@ function validate($post,&$data,&$errors,$series) : bool
 
     if(!isset($post['year']) || trim($post['year']) === '')
     {
-        $errors['year'] = 'A megjelenés dátumát kötelező megadni!';
+        $errors['year'] = 'A megjelenés évét kötelező megadni!';
     }
     else
     {
         if(!filter_var($post['year'],FILTER_VALIDATE_INT))
         {
-            $errors['year'] = 'A dátumnak egész számnak kell lennie!';
+            $errors['year'] = 'A megjelenés évének egész számnak kell lennie!';
         }
         else
         {

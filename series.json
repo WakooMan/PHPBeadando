@@ -1,10 +1,25 @@
 {
     "628f8469ba45d": {
-        "year": "5",
+        "year": "10",
         "title": "Valami2",
         "plot": "fgdgf",
         "cover": "gfdgd",
         "episodes": [],
         "id": "628f8469ba45d"
+    },
+    "628fc68b2ef62": {
+        "year": "2000",
+        "title": "Valami",
+        "plot": "gfdg",
+        "cover": "dfgf",
+        "episodes": {
+            "628fc657af662": {
+                "id": "628fc657af662",
+                "title": "Valami",
+                "date": "2012.05.30.",
+                "plot": "dfsfd"
+            }
+        },
+        "id": "628fc68b2ef62"
     }
 }

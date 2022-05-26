@@ -4,14 +4,15 @@ include('storages.php');
 include('validateSeries.php');
 $users = new UsersStorage();
 $series = new SeriesStorage();
+$_SESSION['oldal'] = 'addSeries.php';
 if(!isset($_SESSION['felhasznalo']) || !($users->findById($_SESSION['felhasznalo']['id'])['isadmin']))
 {
     header('Location: index.php');
     exit();
 }
-if(!isset($_SESSION['ujsorozat']))
+if(!isset($_SESSION['sorozat']))
 {
-    $_SESSION['ujsorozat'] = 
+    $_SESSION['sorozat'] = 
     [
         'year' => 0,
         'title' => '',
@@ -28,13 +29,14 @@ if(count($_POST)>0)
     {
         if($_POST['leadas'] === 'add')
         {
-            $_SESSION['ujsorozat']['title'] = $data['title'];
-            $_SESSION['ujsorozat']['year'] = $data['year'];
-            $_SESSION['ujsorozat']['plot'] = $data['plot'];
-            $_SESSION['ujsorozat']['cover'] = $data['cover'];
-            $series -> add($_SESSION['ujsorozat']);
+            $_SESSION['sorozat']['title'] = $data['title'];
+            $_SESSION['sorozat']['year'] = $data['year'];
+            $_SESSION['sorozat']['plot'] = $data['plot'];
+            $_SESSION['sorozat']['cover'] = $data['cover'];
+            $series -> add($_SESSION['sorozat']);
         }
-        $_SESSION['ujsorozat'] = NULL;
+        $_SESSION['sorozat'] = NULL;
+        $_SESSION['oldal'] = NULL;
         header('Location: index.php');
         exit();
     }
@@ -67,7 +69,7 @@ if(count($_POST)>0)
             <span class="error"><?=$errors['title']?></span>
         <?php endif ?>
         <br>
-        <label for="evjarat">Megjelenés dátuma</label> <input type="text" name="year" id="evjarat" value="<?=(isset($_POST['year']))?$_POST['year']:''?>"> 
+        <label for="evjarat">Megjelenés éve</label> <input type="text" name="year" id="evjarat" value="<?=(isset($_POST['year']))?$_POST['year']:''?>"> 
         <?php if(isset($errors['year'])) : ?>
             <span class="error"><?=$errors['year']?></span>
         <?php endif ?>
@@ -89,9 +91,9 @@ if(count($_POST)>0)
         <tr>
             <th>Epizód címe</th> <th>Megjelenés Dátuma</th> <th>Leírás</th>
         </tr>
-        <?php foreach($_SESSION['ujsorozat']['episodes'] as $epizod) : ?>
+        <?php foreach($_SESSION['sorozat']['episodes'] as $epizod) : ?>
             <tr>
-                <td><?=$epizod['title']?></td> <td><?=$epizod['date']?></td> <td><?=$epizod['plot']?></td>
+                <td><?=$epizod['title']?></td> <td><?=$epizod['date']?></td> <td><?=$epizod['plot']?></td><td><a href="modifyEpisode.php?id=<?=$epizod['id']?>">Módosítás</a></td><td><a href="deleteEpisode.php?id=<?=$epizod['id']?>">Törlés</a></td>
             </tr>
         <?php endforeach ?>
     </table>
