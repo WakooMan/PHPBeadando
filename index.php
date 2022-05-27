@@ -12,31 +12,12 @@ if(!isset($_SESSION['allserieslap']))
         "ig" => 5,
     ];
 }
-if(isset($_GET['lapozas']))
-{
-    $array = explode('-',$_GET['lapozas']);
-    $_SESSION['allserieslap'] = 
-    [
-        "tol" => $array[0],
-        "ig" => $array[1],
-    ];
-}
 if($user !== NULL && !isset($_SESSION['visitedserieslap']))
 {
     $_SESSION['visitedserieslap'] = 
     [
         "tol" => 1,
         "ig" => 5,
-    ];
-}
-
-if(isset($_GET['lapozas2']))
-{
-    $array = explode('-',$_GET['lapozas2']);
-    $_SESSION['visitedserieslap'] = 
-    [
-        "tol" => $array[0],
-        "ig" => $array[1],
     ];
 }
 ?>
@@ -64,52 +45,49 @@ if(isset($_GET['lapozas2']))
             <tr>
                 <th>Cím</th><th>Epizódok száma</th><th>Utolsó rész megjelenésének dátuma</th>
             </tr>
-            <?php $elkezdettseries = array_filter($series -> findAll(),function($elem) use($user) {return $user['watched'][$elem['id']]>0;});
-            foreach(array_reverse(array_slice($elkezdettseries,-$_SESSION['visitedserieslap']['ig'],$_SESSION['visitedserieslap']['ig']-$_SESSION['visitedserieslap']['tol']+1)) as $ser) : ?>
+            <?php $_SESSION['elkezdett'] = array_filter($series -> findAll(),function($elem) use($user) {return $user['watched'][$elem['id']]>0;});
+            foreach(array_reverse(array_slice($_SESSION['elkezdett'],-$_SESSION['visitedserieslap']['ig'],$_SESSION['visitedserieslap']['ig']-$_SESSION['visitedserieslap']['tol']+1)) as $ser) : ?>
                 <tr>
                 <td><?=$ser['title']?></td> <td><?=count($ser['episodes'])?></td> <td><?=end($ser['episodes'])['date']?></td> <td><a href="reszletek.php?id=<?=$ser['id']?>">Részletek</a></td> <?php if($user['isadmin']) : ?><td><a href="modifySeries.php?id=<?=$ser['id']?>">Módosítás</a></td> <td><a href="deleteSeries.php?id=<?=$ser['id']?>">Törlés</a></td><?php endif ?>
                 </tr>
             <?php endforeach ?>
-            <tr>
-            <form action="" method="GET" novalidate>
-            <?php if($_SESSION['visitedserieslap']['tol']>5 && $_SESSION['visitedserieslap']['ig'] > 5) : ?>
-                <td><button type="submit" name="lapozas2" value="<?=($_SESSION['visitedserieslap']['tol']-5).'-'.($_SESSION['visitedserieslap']['ig']-($_SESSION['visitedserieslap']['ig']%5))?>"><?=($_SESSION['visitedserieslap']['tol']-5).'-'.($_SESSION['visitedserieslap']['ig']-($_SESSION['visitedserieslap']['ig']%5))?></button></td>
-            <?php endif ?>
-            <td><button type="submit" name="lapozas2" value="<?=($_SESSION['visitedserieslap']['tol']).'-'.($_SESSION['visitedserieslap']['ig'])?>" disabled><?=($_SESSION['visitedserieslap']['tol']).'-'.((count($elkezdettseries)<$_SESSION['visitedserieslap']['ig'])?count($elkezdettseries):$_SESSION['visitedserieslap']['ig'])?></button></td>
-            <?php if(count($elkezdettseries)>=($_SESSION['visitedserieslap']['tol']+5)) : ?>
-                <?php $tmpig = (count($elkezdettseries)<($_SESSION['visitedserieslap']['ig']+5))?count($elkezdettseries):$_SESSION['visitedserieslap']['ig']+5?>
-                <td><button type="submit" name="lapozas2" value="<?=($_SESSION['visitedserieslap']['tol']+5).'-'.$tmpig?>"><?=($_SESSION['visitedserieslap']['tol']+5).'-'.$tmpig?></button></td>
-            <?php endif ?>
-            </form>
-        </tr>
         </table>
+        <div id="lapozasform1">
+            <?php if($_SESSION['visitedserieslap']['tol']>5 && $_SESSION['visitedserieslap']['ig'] > 5) : ?>
+                <button value="<?=($_SESSION['visitedserieslap']['tol']-5).'-'.($_SESSION['visitedserieslap']['ig']-($_SESSION['visitedserieslap']['ig']%5))?>"><?=($_SESSION['visitedserieslap']['tol']-5).'-'.($_SESSION['visitedserieslap']['ig']-($_SESSION['visitedserieslap']['ig']%5))?></button>
+            <?php endif ?>
+            <button value="<?=($_SESSION['visitedserieslap']['tol']).'-'.($_SESSION['visitedserieslap']['ig'])?>" disabled><?=($_SESSION['visitedserieslap']['tol']).'-'.((count($_SESSION['elkezdett'])<$_SESSION['visitedserieslap']['ig'])?count($_SESSION['elkezdett']):$_SESSION['visitedserieslap']['ig'])?></button>
+            <?php if(count($_SESSION['elkezdett'])>=($_SESSION['visitedserieslap']['tol']+5)) : ?>
+                <?php $tmpig = (count($_SESSION['elkezdett'])<($_SESSION['visitedserieslap']['ig']+5))?count($_SESSION['elkezdett']):$_SESSION['visitedserieslap']['ig']+5?>
+                <button value="<?=($_SESSION['visitedserieslap']['tol']+5).'-'.$tmpig?>"><?=($_SESSION['visitedserieslap']['tol']+5).'-'.$tmpig?></button>
+            <?php endif ?>
+        </div>
     <?php endif ?>
     <h2>Összes Sorozat</h2>
     <table>
         <tr>
             <th>Cím</th><th>Epizódok száma</th><th>Utolsó rész megjelenésének dátuma</th>
         </tr>
-        <?php $allseries = $series -> findAll();
-        foreach(array_reverse(array_slice($allseries,-$_SESSION['allserieslap']['ig'],$_SESSION['allserieslap']['ig']-$_SESSION['allserieslap']['tol']+1)) as $ser) : ?>
+        <?php $_SESSION['osszes'] = $series -> findAll();
+        foreach(array_reverse(array_slice($_SESSION['osszes'],-$_SESSION['allserieslap']['ig'],$_SESSION['allserieslap']['ig']-$_SESSION['allserieslap']['tol']+1)) as $ser) : ?>
             <tr>
-            <td><?=$ser['title']?></td> <td><?=count($ser['episodes'])?></td> <td><?=end($ser['episodes'])['date']?></td> <td><a href="reszletek.php?id=<?=$ser['id']?>">Részletek</a></td> <?php if($user['isadmin']) : ?><td><a href="modifySeries.php?id=<?=$ser['id']?>">Módosítás</a></td> <td><a href="deleteSeries.php?id=<?=$ser['id']?>">Törlés</a></td><?php endif ?>
+            <td><?=$ser['title']?></td> <td><?=count($ser['episodes'])?></td> <td><?=end($ser['episodes'])['date']?></td> <td><a href="reszletek.php?id=<?=$ser['id']?>">Részletek</a></td> <?php if($user !== NULL && $user['isadmin']) : ?><td><a href="modifySeries.php?id=<?=$ser['id']?>">Módosítás</a></td> <td><a href="deleteSeries.php?id=<?=$ser['id']?>">Törlés</a></td><?php endif ?>
             </tr>
         <?php endforeach ?>
-        <tr>
-            <form action="" method="GET" novalidate>
-            <?php if($_SESSION['allserieslap']['tol']>5 && $_SESSION['allserieslap']['ig'] > 5) : ?>
-                <td><button type="submit" name="lapozas" value="<?=($_SESSION['allserieslap']['tol']-5).'-'.($_SESSION['allserieslap']['ig']-($_SESSION['allserieslap']['ig']%5))?>"><?=($_SESSION['allserieslap']['tol']-5).'-'.($_SESSION['allserieslap']['ig']-($_SESSION['allserieslap']['ig']%5))?></button></td>
-            <?php endif ?>
-            <td><button type="submit" name="lapozas" value="<?=($_SESSION['allserieslap']['tol']).'-'.($_SESSION['allserieslap']['ig'])?>" disabled><?=($_SESSION['allserieslap']['tol']).'-'.((count($allseries)<$_SESSION['allserieslap']['ig'])?count($allseries):$_SESSION['allserieslap']['ig'])?></button></td>
-            <?php if(count($allseries)>=($_SESSION['allserieslap']['tol']+5)) : ?>
-                <?php $tmpig = (count($allseries)<($_SESSION['allserieslap']['ig']+5))?count($allseries):$_SESSION['allserieslap']['ig']+5?>
-                <td><button type="submit" name="lapozas" value="<?=($_SESSION['allserieslap']['tol']+5).'-'.$tmpig?>"><?=($_SESSION['allserieslap']['tol']+5).'-'.$tmpig?></button></td>
-            <?php endif ?>
-            </form>
-        </tr>
     </table>
-    <?php if($user['isadmin']) : ?>
+    <div id="lapozasform2">
+        <?php if($_SESSION['allserieslap']['tol']>5 && $_SESSION['allserieslap']['ig'] > 5) : ?>
+            <button value="<?=($_SESSION['allserieslap']['tol']-5).'-'.($_SESSION['allserieslap']['ig']-($_SESSION['allserieslap']['ig']%5))?>"><?=($_SESSION['allserieslap']['tol']-5).'-'.($_SESSION['allserieslap']['ig']-($_SESSION['allserieslap']['ig']%5))?></button>
+        <?php endif ?>
+        <button value="<?=($_SESSION['allserieslap']['tol']).'-'.($_SESSION['allserieslap']['ig'])?>" disabled><?=($_SESSION['allserieslap']['tol']).'-'.((count($_SESSION['osszes'])<$_SESSION['allserieslap']['ig'])?count($_SESSION['osszes']):$_SESSION['allserieslap']['ig'])?></button>
+        <?php if(count($_SESSION['osszes'])>=($_SESSION['allserieslap']['tol']+5)) : ?>
+            <?php $tmpig = (count($_SESSION['osszes'])<($_SESSION['allserieslap']['ig']+5))?count($_SESSION['osszes']):$_SESSION['allserieslap']['ig']+5?>
+            <button value="<?=($_SESSION['allserieslap']['tol']+5).'-'.$tmpig?>"><?=($_SESSION['allserieslap']['tol']+5).'-'.$tmpig?></button>
+        <?php endif ?>
+    </div>
+    <?php if($user!==NULL && $user['isadmin']) : ?>
         <a href="addSeries.php">Sorozat hozzáadása</a>
     <?php endif ?>
+    <script src="ajax.js"></script>
 </body>
 </html>
