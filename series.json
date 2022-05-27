@@ -28,5 +28,52 @@
             }
         },
         "id": "628fd8a6118a0"
+    },
+    "6290a4bf94da3": {
+        "year": "2000",
+        "title": "fgdsfds",
+        "plot": "dfsfds",
+        "cover": "fdssdf",
+        "episodes": {
+            "6290a4b3b4474": {
+                "id": "6290a4b3b4474",
+                "title": "Vgt",
+                "date": "2012.05.30.",
+                "plot": "dfsdf",
+                "rating": "5"
+            },
+            "6290a5eb76169": {
+                "id": "6290a5eb76169",
+                "title": "dsfsd",
+                "date": "2012.05.15.",
+                "plot": "dfsdf",
+                "rating": "7"
+            }
+        },
+        "id": "6290a4bf94da3"
+    },
+    "6290aeee47f7f": {
+        "episodes": {
+            "6290aeeb6d69c": {
+                "id": "6290aeeb6d69c",
+                "title": "glogdodf",
+                "date": "2012.05.30.",
+                "plot": "gfdgd",
+                "rating": "9"
+            }
+        },
+        "title": "dfsfesfseef",
+        "year": "2015",
+        "plot": "dsfdssdf",
+        "cover": "fdsfdsdsf",
+        "id": "6290aeee47f7f"
+    },
+    "6290b0735fa1e": {
+        "episodes": [],
+        "title": "tzrtzrzttz",
+        "year": "1995",
+        "plot": "gfdgfg",
+        "cover": "gffgdgf",
+        "id": "6290b0735fa1e"
     }
 }

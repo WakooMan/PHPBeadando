@@ -4,7 +4,8 @@ include('storages.php');
 include('validateEpisode.php');
 $users = new UsersStorage();
 $series = new SeriesStorage();
-if(!isset($_SESSION['felhasznalo']) || !($users->findById($_SESSION['felhasznalo']['id'])['isadmin']) || !isset($_SESSION['sorozat']) || !isset($_SESSION['oldal']))
+$user = (isset($_SESSION['felhasznalo']))?$users->findById($_SESSION['felhasznalo']):NULL;
+if($user === NULL  || !$user['isadmin'] || !isset($_SESSION['sorozat']) || !isset($_SESSION['oldal']))
 {
     header('Location: index.php');
     exit();

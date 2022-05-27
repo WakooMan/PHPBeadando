@@ -4,8 +4,9 @@ include('storages.php');
 include('validateSeries.php');
 $users = new UsersStorage();
 $series = new SeriesStorage();
+$user = (isset($_SESSION['felhasznalo']))?$users->findById($_SESSION['felhasznalo']):NULL;
 $_SESSION['oldal'] = 'modifySeries.php?id='.$_GET['id'];
-if(!isset($_SESSION['felhasznalo']) || !($users->findById($_SESSION['felhasznalo']['id'])['isadmin']) || !isset($_GET['id']) || $series->findById($_GET['id']) === NULL)
+if($user === NULL  || !$user['isadmin'] || !isset($_GET['id']) || $series->findById($_GET['id']) === NULL)
 {
     header('Location: index.php');
     exit();
@@ -18,8 +19,28 @@ if(count($_POST)>0)
 {
     $data = [];
     $errors = [];
-    if(validate($_POST,$data,$errors,$series,$_SESSION['sorozat']) || $_POST['leadas'] === 'cancel')
+    if(validate($_POST,$data,$errors,$series,$_SESSION['sorozat']) || $_POST['leadas'] === 'cancel' || isset($_POST['addepisode']) || isset($_POST['modifyepisode']) || isset($_POST['deleteepisode']))
     {
+        if(isset($_POST['addepisode']) || isset($_POST['modifyepisode']) || isset($_POST['deleteepisode']) )
+        {
+            $_SESSION['sorozat']['title'] = (isset($_POST['title']))?$_POST['title']:'';
+            $_SESSION['sorozat']['year'] = (isset($_POST['year']))?$_POST['year']:'';
+            $_SESSION['sorozat']['plot'] = (isset($_POST['plot']))?$_POST['plot']:'';
+            $_SESSION['sorozat']['cover'] = (isset($_POST['cover']))?$_POST['cover']:'';
+            if(isset($_POST['addepisode']))
+            {
+                header('Location: addEpisode.php');
+            }
+            elseif(isset($_POST['modifyepisode']))
+            {
+                header('Location: modifyEpisode.php?id='.$_POST['modifyepisode']);
+            }
+            elseif(isset($_POST['deleteepisode']))
+            {
+                header('Location: deleteEpisode.php?id='.$_POST['deleteepisode']);
+            }
+            exit();
+        }
         if($_POST['leadas'] === 'add')
         {
             $_SESSION['sorozat']['title'] = $data['title'];
@@ -37,8 +58,8 @@ if(count($_POST)>0)
                 }
             }
         }
-        $_SESSION['sorozat'] = NULL;
-        $_SESSION['oldal'] = NULL;
+        unset($_SESSION['sorozat']);
+        unset($_SESSION['oldal']);
         header('Location: index.php');
         exit();
     }
@@ -87,18 +108,18 @@ if(count($_POST)>0)
         <?php endif ?>
         <br>
         <button type="submit" name ="leadas" value="add">Mósodít</button> <button type="submit" name ="leadas" value="cancel">Mégse</button>
-    </form>
-    <h2>Sorozat Epizódjai</h2>
-    <table>
-        <tr>
-            <th>Epizód címe</th> <th>Megjelenés Dátuma</th> <th>Leírás</th> <th>Értékelés</th>
-        </tr>
-        <?php foreach($_SESSION['sorozat']['episodes'] as $epizod) : ?>
+        <h2>Sorozat Epizódjai</h2>
+        <table>
             <tr>
-                <td><?=$epizod['title']?></td> <td><?=$epizod['date']?></td> <td><?=$epizod['plot']?></td> <td><?=$epizod['rating']?></td> <td><a href="modifyEpisode.php?id=<?=$epizod['id']?>">Módosítás</a></td><td><a href="deleteEpisode.php?id=<?=$epizod['id']?>">Törlés</a></td>
+                <th>Epizód címe</th> <th>Megjelenés Dátuma</th> <th>Leírás</th> <th>Értékelés</th>
             </tr>
-        <?php endforeach ?>
-    </table>
-    <a href="addEpisode.php">Epizód hozzáadása</a>
+            <?php foreach($_SESSION['sorozat']['episodes'] as $epizod) : ?>
+                <tr>
+                    <td><?=$epizod['title']?></td> <td><?=$epizod['date']?></td> <td><?=$epizod['plot']?></td> <td><?=$epizod['rating']?></td> <td><button type="submit" name="modifyepisode" value="<?=$epizod['id']?>">Módosítás</button></td><td><button type="submit" name="deleteepisode" value="<?=$epizod['id']?>">Törlés</button></td>
+                </tr>
+            <?php endforeach ?>
+        </table>
+        <button type="submit" name="addepisode" value="add">Epizód hozzáadása</button>
+    </form>
 </body>
 </html>

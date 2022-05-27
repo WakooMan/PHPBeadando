@@ -5,7 +5,10 @@
         "email": "admin@gmail.com",
         "isadmin": true,
         "watched": {
-            "628fd8a6118a0": 3
+            "628fd8a6118a0": 3,
+            "6290a4bf94da3": 1,
+            "6290aeee47f7f": 1,
+            "6290b0735fa1e": 0
         },
         "id": "adminid"
     },
@@ -15,7 +18,10 @@
         "email": "magyar@gmail.com",
         "isadmin": false,
         "watched": {
-            "628fd8a6118a0": 3
+            "628fd8a6118a0": 3,
+            "6290a4bf94da3": 1,
+            "6290aeee47f7f": 1,
+            "6290b0735fa1e": 0
         },
         "id": "628cb5450ac7b"
     }

@@ -3,7 +3,8 @@ session_start();
 include('storages.php');
 $users = new UsersStorage();
 $series = new SeriesStorage();
-if(!isset($_SESSION['felhasznalo']) || !($users->findById($_SESSION['felhasznalo']['id'])['isadmin']) || !isset($_GET['id']) || $series->findById($_GET['id']) === NULL)
+$user = (isset($_SESSION['felhasznalo']))?$users->findById($_SESSION['felhasznalo']):NULL;
+if($user === NULL  || !$user['isadmin'] || !isset($_GET['id']) || $series->findById($_GET['id']) === NULL)
 {
     header('Location: index.php');
     exit();

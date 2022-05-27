@@ -3,6 +3,8 @@ session_start();
 include('storages.php');
 $series = new SeriesStorage();
 $users = new UsersStorage();
+$user = (isset($_SESSION['felhasznalo']))?$users->findById($_SESSION['felhasznalo']):NULL;
+print_r($user);
 if(!isset($_GET['id']) || $series->findById($_GET['id']) === NULL)
 {
     header('Location: index.php');
@@ -11,10 +13,8 @@ if(!isset($_GET['id']) || $series->findById($_GET['id']) === NULL)
 $ser = $series->findById($_GET['id']);
 if(isset($_POST['inc']))
 {
-    $u = $users->findById($_SESSION['felhasznalo']['id']);
-    $u['watched'][$ser['id']]++;
-    $users->update($u['id'],$u);
-    $_SESSION['felhasznalo']['watched'][$ser['id']]++;
+    $user['watched'][$ser['id']]++;
+    $users->update($user['id'],$user);
 }
 ?>
 <!DOCTYPE html>
@@ -51,16 +51,16 @@ if(isset($_POST['inc']))
     <h1>Epizódok</h1>
     <table>
         <tr>
-            <th>Epizód címe</th><th>Megjelenés Dátuma</th><th>Leírás</th><th>Értékelés</th><?php if(isset($_SESSION['felhasznalo'])) : ?><th>Megtekintett</th><?php endif ?>
+            <th>Epizód címe</th><th>Megjelenés Dátuma</th><th>Leírás</th><th>Értékelés</th><?php if($user !== NULL) : ?><th>Megtekintett</th><?php endif ?>
         </tr>
         <?php $i=0; foreach($ser['episodes'] as $episode) : ?>
             <tr>
                 <td><?=$episode['title']?></td><td><?=$episode['date']?></td><td><?=$episode['plot']?></td><td><?=$episode['rating']?></td>
-                <?php if(isset($_SESSION['felhasznalo'])) : ?>
+                <?php if($user !== NULL) : ?>
                     <td>
-                        <?php if($i === $_SESSION['felhasznalo']['watched'][$ser['id']]) : ?>
+                        <?php if($i === $user['watched'][$ser['id']]) : ?>
                             <form action="" method="POST"> <button type="submit" name="inc" value="novel">Megnéz</button></form>
-                        <?php elseif($i < $_SESSION['felhasznalo']['watched'][$ser['id']]) : ?>
+                        <?php elseif($i < $user['watched'][$ser['id']]) : ?>
                             <div class="success">Megtekintett</div>
                         <?php else : ?>
                             <div class="error">Nem Megtekintett</div>

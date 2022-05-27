@@ -47,13 +47,13 @@ if(isset($_GET) && count($_GET)>0)
     $user = validateUser($_GET,$error,$users);
     if($user !== NULL)
     {
-        $_SESSION['felhasznalo']=
-        [
-            'id'=>$user['id'],
-            'username'=>$user['username'],
-            'email'=>$user['email'],
-            'watched'=>$user['watched'],
-        ];
+        $_SESSION['felhasznalo']=$user['id'];
+        // [
+        //     'id'=>$user['id'],
+        //     'username'=>$user['username'],
+        //     'email'=>$user['email'],
+        //     'watched'=>$user['watched'],
+        // ];
         header('Location: index.php');
         exit();
     }

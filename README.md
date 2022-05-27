@@ -24,7 +24,7 @@ Az alap feladatok (15 pont)
 
 [x] Főoldal: a sorozatoknál megjelenik az epizódok száma is (1 pont)
 [x] Főoldal: a sorozatoknál megjelenik a legutóbbi epizód sugárzásának dátuma is (1 pont)
-[ ] Főoldal: bejelentkezett felhasználó külön listában látja azokat a sorozatokat, amelyeknél legalább egy epizódot megtekintettnek jelölt (1 pont)
+[x] Főoldal: bejelentkezett felhasználó külön listában látja azokat a sorozatokat, amelyeknél legalább egy epizódot megtekintettnek jelölt (1 pont)
 [x] Regisztrációs űrlap: megfelelő elemeket tartalmazza (0,5 pont)
 [x] Regisztrációs űrlap: hibás esetek kezelése, hibaüzenet, állapottartás (1,5 pont)
 [x] Regisztrációs űrlap: sikeres regisztráció (0,5 pont)
