@@ -41,14 +41,14 @@ if($user !== NULL && !isset($_SESSION['visitedserieslap']))
     <?php endif ?>
     <?php if($user !== NULL) : ?>
     <h2>Elkezdett Sorozatok</h2>
-        <table>
+        <table id="tabla1">
             <tr>
                 <th>Cím</th><th>Epizódok száma</th><th>Utolsó rész megjelenésének dátuma</th>
             </tr>
             <?php $_SESSION['elkezdett'] = array_filter($series -> findAll(),function($elem) use($user) {return $user['watched'][$elem['id']]>0;});
             foreach(array_reverse(array_slice($_SESSION['elkezdett'],-$_SESSION['visitedserieslap']['ig'],$_SESSION['visitedserieslap']['ig']-$_SESSION['visitedserieslap']['tol']+1)) as $ser) : ?>
                 <tr>
-                <td><?=$ser['title']?></td> <td><?=count($ser['episodes'])?></td> <td><?=end($ser['episodes'])['date']?></td> <td><a href="reszletek.php?id=<?=$ser['id']?>">Részletek</a></td> <?php if($user['isadmin']) : ?><td><a href="modifySeries.php?id=<?=$ser['id']?>">Módosítás</a></td> <td><a href="deleteSeries.php?id=<?=$ser['id']?>">Törlés</a></td><?php endif ?>
+                <td><?=$ser['title']?></td> <td><?=count($ser['episodes'])?></td> <td><?=end($ser['episodes'])['date']?></td> <td><a href="reszletek.php?id=<?=$ser['id']?>">Részletek</a></td> <?php if($user!==NULL && $user['isadmin']) : ?><td><a href="modifySeries.php?id=<?=$ser['id']?>">Módosítás</a></td> <td><a href="deleteSeries.php?id=<?=$ser['id']?>">Törlés</a></td><?php endif ?>
                 </tr>
             <?php endforeach ?>
         </table>
@@ -64,7 +64,7 @@ if($user !== NULL && !isset($_SESSION['visitedserieslap']))
         </div>
     <?php endif ?>
     <h2>Összes Sorozat</h2>
-    <table>
+    <table id="tabla2">
         <tr>
             <th>Cím</th><th>Epizódok száma</th><th>Utolsó rész megjelenésének dátuma</th>
         </tr>
