@@ -15,7 +15,7 @@ $buttons = '';
 $tablecells= $tablecells.'<tr><th>Cím</th><th>Epizódok száma</th><th>Utolsó rész megjelenésének dátuma</th></tr>';
 foreach(array_reverse(array_slice($series,-$interval['ig'],$interval['ig']-$interval['tol']+1)) as $ser)
 {        
-    $tablecells=$tablecells.'<tr><td>'.$ser['title'].'</td> <td>'.count($ser['episodes']).'</td> <td>'.end($ser['episodes'])['date'].'</td> <td><a href="reszletek.php?id='.$ser['id'].'">Részletek</a></td> '.(($user!==NULL && $user['isadmin'])?'<td><a href="modifySeries.php?id='.$ser['id'].'">Módosítás</a></td> <td><a href="deleteSeries.php?id='.$ser['id'].'">Törlés</a></td>':'').'</tr>';
+    $tablecells=$tablecells.'<tr><td>'.$ser['title'].'</td> <td>'.count($ser['episodes']).'</td> <td>'.((count($ser['episodes'])>0)?end($ser['episodes'])['date']:'-').'</td> <td><a href="reszletek.php?id='.$ser['id'].'">Részletek</a></td> '.(($user!==NULL && $user['isadmin'])?'<td><a href="modifySeries.php?id='.$ser['id'].'">Módosítás</a></td> <td><a href="deleteSeries.php?id='.$ser['id'].'">Törlés</a></td>':'').'</tr>';
 }
 if($interval['tol']>5 && $interval['ig'] > 5)
 {

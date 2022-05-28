@@ -45,5 +45,5 @@ Plusz feladatok (plusz 5 pont)
 
 [x] Főoldal: az összes helyett csak a legutóbb hozzáadott 5 sorozat kerül listázása (1 pont)
 [x] Főoldal: a legutóbbi 5 sorozatot tartalmazó lista lapozható, vagyis egy linkre kattintással a 6-10., 11-15., stb sorozat jelenik meg az oldalon (1 pont)
-[ ] Főoldal: a legutóbbi 5 sorozatot tartalmazó lista lapozása AJAX/fetch lekérdezéssel történik (2 pont)
+[x] Főoldal: a legutóbbi 5 sorozatot tartalmazó lista lapozása AJAX/fetch lekérdezéssel történik (2 pont)
 [x] Űrlapok: az űrlapoknál a hibaüzenetek a megfelelő űrlapmezők mellett jelennek meg (1 pont)
