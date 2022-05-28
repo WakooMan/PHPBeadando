@@ -10,7 +10,6 @@
             "6290aeee47f7f": 1,
             "6290dbad87e4b": 1,
             "6290dbc477bb2": 1,
-            "6290dbdc1602f": 1,
             "6290dcd966b07": 0
         },
         "id": "adminid"
@@ -26,9 +25,23 @@
             "6290aeee47f7f": 1,
             "6290dbad87e4b": 0,
             "6290dbc477bb2": 0,
-            "6290dbdc1602f": 0,
             "6290dcd966b07": 0
         },
         "id": "628cb5450ac7b"
+    },
+    "62927a3274cc7": {
+        "username": "gertrud",
+        "password": "vmi",
+        "email": "gertrud@gmail.com",
+        "isadmin": false,
+        "watched": {
+            "628fd8a6118a0": 0,
+            "6290a4bf94da3": 0,
+            "6290aeee47f7f": 0,
+            "6290dbad87e4b": 0,
+            "6290dbc477bb2": 0,
+            "6290dcd966b07": 0
+        },
+        "id": "62927a3274cc7"
     }
 }

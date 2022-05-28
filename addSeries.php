@@ -22,7 +22,7 @@ if(count($_POST)>0)
 {
     $data = [];
     $errors = [];
-    if(validate($_POST,$data,$errors,$series) || $_POST['leadas'] === 'cancel' || isset($_POST['addepisode']) || isset($_POST['modifyepisode']) || isset($_POST['deleteepisode']))
+    if(validate($_POST,$data,$errors,$series) || (isset($_POST['leadas']) && $_POST['leadas'] === 'cancel') || isset($_POST['addepisode']) || isset($_POST['modifyepisode']) || isset($_POST['deleteepisode']))
     {
         if(isset($_POST['addepisode']) || isset($_POST['modifyepisode']) || isset($_POST['deleteepisode']) )
         {
@@ -81,44 +81,48 @@ if(count($_POST)>0)
             color:green;
         }
     </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 </head>
 <body>
-    <h1>Sorozat Hozzáadása</h1>
-    <h2>Sorozat adatai</h2>
-    <form action="" method="POST" novalidate>
-        <label for="cim">Cím</label> <input type="text" name="title" id="cim" value="<?=(isset($_POST['title']))?$_POST['title']:((isset($_SESSION['sorozat']['title']))?$_SESSION['sorozat']['title']:'')?>"> 
-        <?php if(isset($errors['title'])) : ?>
-            <span class="error"><?=$errors['title']?></span>
-        <?php endif ?>
-        <br>
-        <label for="evjarat">Megjelenés éve</label> <input type="text" name="year" id="evjarat" value="<?=(isset($_POST['year']))?$_POST['year']:((isset($_SESSION['sorozat']['year']))?$_SESSION['sorozat']['year']:'')?>"> 
-        <?php if(isset($errors['year'])) : ?>
-            <span class="error"><?=$errors['year']?></span>
-        <?php endif ?>
-        <br>
-        <label for="leiras">Leírás</label> <input type="text" name="plot" id="leiras" value="<?=(isset($_POST['plot']))?$_POST['plot']:((isset($_SESSION['sorozat']['plot']))?$_SESSION['sorozat']['plot']:'')?>"> 
-        <?php if(isset($errors['plot'])) : ?>
-            <span class="error"><?=$errors['plot']?></span>
-        <?php endif ?>
-        <br>
-        <label for="borito">Borító</label> <input type="text" name="cover" id="borito" value="<?=(isset($_POST['cover']))?$_POST['cover']:((isset($_SESSION['sorozat']['cover']))?$_SESSION['sorozat']['cover']:'')?>"> 
-        <?php if(isset($errors['cover'])) : ?>
-            <span class="error"><?=$errors['cover']?></span>
-        <?php endif ?>
-        <br>
-        <button type="submit" name ="leadas" value="add">Hozzáad</button> <button type="submit" name ="leadas" value="cancel">Mégse</button> <br>
-        <h2>Sorozat Epizódjai</h2>
-        <table>
-            <tr>
-                <th>Epizód címe</th> <th>Megjelenés Dátuma</th> <th>Leírás</th> <th>Értékelés</th>
-            </tr>
-            <?php foreach($_SESSION['sorozat']['episodes'] as $epizod) : ?>
+    <div class="text-center">
+        <h1>Sorozat Hozzáadása</h1>
+        <h2>Sorozat adatai</h2>
+        <form action="" method="POST" novalidate>
+            <label for="cim">Cím</label> <input type="text" name="title" id="cim" value="<?=(isset($_POST['title']))?$_POST['title']:((isset($_SESSION['sorozat']['title']))?$_SESSION['sorozat']['title']:'')?>"> 
+            <?php if(isset($errors['title'])) : ?>
+                <span class="error"><?=$errors['title']?></span>
+            <?php endif ?>
+            <br>
+            <label for="evjarat">Megjelenés éve</label> <input type="text" name="year" id="evjarat" value="<?=(isset($_POST['year']))?$_POST['year']:((isset($_SESSION['sorozat']['year']))?$_SESSION['sorozat']['year']:'')?>"> 
+            <?php if(isset($errors['year'])) : ?>
+                <span class="error"><?=$errors['year']?></span>
+            <?php endif ?>
+            <br>
+            <label for="leiras">Leírás</label> <input type="text" name="plot" id="leiras" value="<?=(isset($_POST['plot']))?$_POST['plot']:((isset($_SESSION['sorozat']['plot']))?$_SESSION['sorozat']['plot']:'')?>"> 
+            <?php if(isset($errors['plot'])) : ?>
+                <span class="error"><?=$errors['plot']?></span>
+            <?php endif ?>
+            <br>
+            <label for="borito">Borító</label> <input type="text" name="cover" id="borito" value="<?=(isset($_POST['cover']))?$_POST['cover']:((isset($_SESSION['sorozat']['cover']))?$_SESSION['sorozat']['cover']:'')?>"> 
+            <?php if(isset($errors['cover'])) : ?>
+                <span class="error"><?=$errors['cover']?></span>
+            <?php endif ?>
+            <br>
+            <button type="submit" class="btn btn-primary" name ="leadas" value="add">Hozzáad</button> <button type="submit" class="btn btn-primary" name ="leadas" value="cancel">Mégse</button> <br>
+            <h2>Sorozat Epizódjai</h2>
+            <table class="table table-striped">
                 <tr>
-                    <td><?=$epizod['title']?></td> <td><?=$epizod['date']?></td> <td><?=$epizod['plot']?></td> <td><?=$epizod['rating']?></td> <td><button type="submit" name="modifyepisode" value="<?=$epizod['id']?>">Módosítás</button></td><td><button type="submit" name="deleteepisode" value="<?=$epizod['id']?>">Törlés</button></td>
+                    <th>Epizód címe</th> <th>Megjelenés Dátuma</th> <th>Leírás</th> <th>Értékelés</th>
                 </tr>
-            <?php endforeach ?>
-        </table>
-        <button type="submit" name="addepisode" value="add">Epizód hozzáadása</button>
-    </form>
+                <?php foreach($_SESSION['sorozat']['episodes'] as $epizod) : ?>
+                    <tr>
+                        <td><?=$epizod['title']?></td> <td><?=$epizod['date']?></td> <td><?=$epizod['plot']?></td> <td><?=$epizod['rating']?></td> <td><button type="submit" class="btn btn-secondary" name="modifyepisode" value="<?=$epizod['id']?>">Módosítás</button></td><td><button type="submit" class="btn btn-secondary" name="deleteepisode" value="<?=$epizod['id']?>">Törlés</button></td>
+                    </tr>
+                <?php endforeach ?>
+            </table>
+            <button type="submit" class="btn btn-primary" name="addepisode" value="add">Epizód hozzáadása</button>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 </body>
 </html>
